@@ -1,1 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit Converter</title>
 
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .container{
+      background:white;
+      padding:30px;
+      width:350px;
+      border-radius:15px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:20px;
+      color:#333;
+    }
+
+    label{
+      font-weight:bold;
+      display:block;
+      margin-top:15px;
+      margin-bottom:5px;
+      color:#444;
+    }
+
+    select,
+    input{
+      width:100%;
+      padding:10px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:16px;
+    }
+
+    button{
+      width:100%;
+      margin-top:20px;
+      padding:12px;
+      border:none;
+      border-radius:8px;
+      background:#4facfe;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#008cff;
+    }
+
+    .result{
+      margin-top:20px;
+      text-align:center;
+      font-size:20px;
+      font-weight:bold;
+      color:#222;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Unit Converter</h1>
+
+    <label>Category</label>
+    <select id="category" onchange="updateUnits()">
+      <option value="length">Length</option>
+      <option value="weight">Weight</option>
+      <option value="time">Time</option>
+    </select>
+
+    <label>Enter Value</label>
+    <input type="number" id="inputValue" placeholder="Enter number">
+
+    <label>From</label>
+    <select id="fromUnit"></select>
+
+    <label>To</label>
+    <select id="toUnit"></select>
+
+    <button onclick="convert()">Convert</button>
+
+    <div class="result" id="result">
+      Result: 
+    </div>
+  </div>
+
+  <script>
+    const units = {
+      length: {
+        meter: 1,
+        kilometer: 1000,
+        centimeter: 0.01,
+        mile: 1609.34
+      },
+
+      weight: {
+        gram: 1,
+        kilogram: 1000,
+        pound: 453.592,
+        ounce: 28.3495
+      },
+
+      time: {
+        second: 1,
+        minute: 60,
+        hour: 3600,
+        day: 86400
+      }
+    };
+
+    function updateUnits() {
+      const category = document.getElementById("category").value;
+      const fromUnit = document.getElementById("fromUnit");
+      const toUnit = document.getElementById("toUnit");
+
+      fromUnit.innerHTML = "";
+      toUnit.innerHTML = "";
+
+      for (let unit in units[category]) {
+        fromUnit.innerHTML += `<option value="${unit}">${unit}</option>`;
+        toUnit.innerHTML += `<option value="${unit}">${unit}</option>`;
+      }
+    }
+
+    function convert() {
+      const category = document.getElementById("category").value;
+      const inputValue = parseFloat(document.getElementById("inputValue").value);
+      const fromUnit = document.getElementById("fromUnit").value;
+      const toUnit = document.getElementById("toUnit").value;
+
+      if (isNaN(inputValue)) {
+        alert("Please enter a valid number");
+        return;
+      }
+
+      const baseValue = inputValue * units[category][fromUnit];
+      const convertedValue = baseValue / units[category][toUnit];
+
+      document.getElementById("result").innerHTML =
+        `Result: ${convertedValue.toFixed(4)} ${toUnit}`;
+    }
+
+    updateUnits();
+  </script>
+
+</body>
+</html>
