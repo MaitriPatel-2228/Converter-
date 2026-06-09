@@ -6,6 +6,11 @@
       font-family: Arial, sans-serif;
     }
 
+   h1{
+   padding:30px;
+   margin-top:10px;
+   margin-bottom:10px;
+   }
     body{
       background: linear-gradient(135deg, #4facfe, #00f2fe);
       min-height:100vh;
