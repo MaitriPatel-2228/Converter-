@@ -64,7 +64,8 @@
     }
 
     button:hover{
-      background:#008cff;
+    background:#ff4757;
+    color:white;
     }
 
     .result{
